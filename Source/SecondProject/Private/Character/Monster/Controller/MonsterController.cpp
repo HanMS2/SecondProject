@@ -78,38 +78,8 @@ void AMonsterController::OnTargetPerceptionUpdatedEvent(AActor* actor, FAIStimul
 			}
 		}		
 
-
-		playerActor = actor;		
+		if (GetBlackboardComponent()->GetValueAsObject("Target") == nullptr) {
+			GetBlackboardComponent()->SetValueAsObject("Target", actor);
+		}
 	}	
 }
-
-void AMonsterController::Tick(float DeltaTime)
-{
-	/*
-	Super::Tick(DeltaTime);
-	
-
-	if (playerActor != nullptr)
-	{
-		TArray< AActor*> OutActors;
-		PerceptionComponent->GetKnownPerceivedActors(UAISense_Sight::StaticClass(), OutActors);
-
-
-		if (OutActors.Num() == 0)
-		{
-			GetBlackboardComponent()->SetValueAsObject("Target", nullptr);
-			playerActor = nullptr;
-		}
-		else
-		{
-			if (OutActors.Contains(playerActor))
-			{
-				GetBlackboardComponent()->SetValueAsObject("Target", playerActor);
-			}
-		}
-
-		//UE_LOG(LogTemp, Log, TEXT("Tick 돈다."));
-	}
-	*/
-}
-

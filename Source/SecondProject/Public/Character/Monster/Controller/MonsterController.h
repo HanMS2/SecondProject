@@ -28,9 +28,7 @@ protected:
 		class AMonster* OwnerMonster;
 
 
-	UPROPERTY()
-		AActor* playerActor;
-
+	
 	virtual void OnPossess(APawn* InPawn) override;
 
 	
@@ -43,5 +41,4 @@ public:
 		void OnTargetPerceptionUpdatedEvent(AActor* actor,struct FAIStimulus Stimulus);
 
 
-	virtual void Tick(float DeltaTime) override;
 };
