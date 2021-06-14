@@ -6,6 +6,7 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Character/NPC/NPCBase.h"
+#include "Widget/NPC/NPCSellItemWidget.h"
 
 
 
@@ -41,8 +42,19 @@ void UNPCDialogWidget::OnClickedButtonChat()
 
 void UNPCDialogWidget::OnClickedButtonBuy()
 {
+	if (sell_ItemWidgetClass != nullptr)
+	{
+		if (sell_ItemWidget == nullptr)
+		{
+			sell_ItemWidget = CreateWidget<UNPCSellItemWidget>(GetOwningPlayer(), sell_ItemWidgetClass.Get());
+		}
 
-
+		if (sell_ItemWidget->IsInViewport() == false)
+		{
+			sell_ItemWidget->SetNPC(ownerNPC);
+			sell_ItemWidget->AddToViewport();
+		}
+	}
 }
 
 void UNPCDialogWidget::OnClickedButtonSell()

@@ -11,10 +11,12 @@
 #include "Character/Player/PlayerCharacter.h"
 #include "Character/Player/Controller/CustomController.h"
 #include "Perception/AISense_Sight.h"
+#include "Character/Monster/Component/MonsterPerceptionComponent.h"
 
 AMonsterController::AMonsterController()
 {
-	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PerceptionComponent"));
+	PerceptionComponent = CreateDefaultSubobject<UMonsterPerceptionComponent>(TEXT("PerceptionComponent"));
+	
 }
 
 
@@ -50,9 +52,6 @@ void AMonsterController::OnPossess(APawn* InPawn)
 		}
 	}
 
-
-
-
 }
 
 void AMonsterController::StopBehaviorTree()
@@ -78,12 +77,15 @@ void AMonsterController::OnTargetPerceptionUpdatedEvent(AActor* actor, FAIStimul
 				controller->AddBossWidget(Cast<AMonster>(GetPawn()));
 			}
 		}		
+
+
 		playerActor = actor;		
 	}	
 }
 
 void AMonsterController::Tick(float DeltaTime)
 {
+	/*
 	Super::Tick(DeltaTime);
 	
 
@@ -108,5 +110,6 @@ void AMonsterController::Tick(float DeltaTime)
 
 		//UE_LOG(LogTemp, Log, TEXT("Tick 돈다."));
 	}
+	*/
 }
 

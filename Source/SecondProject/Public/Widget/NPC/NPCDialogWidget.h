@@ -48,6 +48,11 @@ protected:
 	UPROPERTY()
 	class ANPCBase* ownerNPC;
 
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UNPCSellItemWidget> sell_ItemWidgetClass;
+	UPROPERTY()
+		class UNPCSellItemWidget* sell_ItemWidget;
+
 public:
 	void Init(class ANPCBase* npc);
 

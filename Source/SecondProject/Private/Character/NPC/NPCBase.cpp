@@ -31,6 +31,18 @@ void ANPCBase::BeginPlay()
 	
 }
 
+const TArray<FNPCSellItem*> ANPCBase::GetSellItemList()
+{
+	if (sellTable != nullptr)
+	{
+		TArray<FNPCSellItem*> items;
+		sellTable->GetAllRows<FNPCSellItem>("", items);
+		return items;
+	}
+
+	return TArray<FNPCSellItem*>();
+}
+
 // Called every frame
 void ANPCBase::Tick(float DeltaTime)
 {
@@ -54,9 +66,6 @@ void ANPCBase::Interaction(APlayerController* controller)
 			con->GetDialogWidget()->Init(this);
 			con->GetDialogWidget()->AddToViewport();
 		}
-
-
 	}
-
 }
 

@@ -15,9 +15,11 @@ struct FNPCSellItem : public FTableRowBase
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnywhere)
-		TSubclassOf<AItemActor>	sellItemClass;
+		TSubclassOf<class AItemActor>	sellItemClass;
 	UPROPERTY(EditAnywhere, meta = (EditCondition = "!bInfinite"))
 		int32 count;
+	UPROPERTY(EditAnywhere)
+		int32 price;
 	UPROPERTY(EditAnywhere)
 		bool bInfinite = false;
 };
@@ -57,8 +59,8 @@ protected:
 		TSubclassOf<class UNPCDialogWidget> dialogWidgetClass;
 	
 
-
 public:	
+	const TArray<FNPCSellItem*> GetSellItemList();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void Interaction(APlayerController* controller);
