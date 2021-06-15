@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "StatusComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeGold, const int32&, changedGold);
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SECONDPROJECT_API UStatusComponent : public UActorComponent
@@ -37,27 +39,10 @@ protected:
 	UPROPERTY(EditAnywhere)
 		float def;
 
-//
-//
-//	FTimerHandle recoverStaminaTimerHandle;
-//	FTimerHandle removeStaminaTimerHandle;
-//
-//	void RecoverStamina();
-//	void RemoveStamina();
-//public:
-//	void PauseRecoverStamina();
-//
-//	void RunRemoveStaminaTimer();
-//
-//	void PauseRemoveStamina();
-//	void RunRecoverStaminaTimer();
-
-
-	//n초당 sp를 회복시키는 타이머 핸들
-
-	//sp 회복중지 요청이 들어오면 저장합니다.
 	TArray<int32>PauseStaminaOrder;
 
+	UPROPERTY(EditAnywhere)
+		int32 gold;
 public:
 
 	void AddDam(float value) { dam += value; }
@@ -66,6 +51,8 @@ public:
 	const float& GetDam() { return dam; }
 	const float& GetDef() { return def; }
 
+	const int32& GetGold() { return gold; }
+	void SetGold(const int32& value) { gold = value; OnChangeGold.Broadcast(gold); }
 
 	FTimerHandle recoverStaminaTimeTimerHandle;
 
@@ -95,5 +82,5 @@ public:
 	bool CheckStamina(float value);
 
 
-
+	FOnChangeGold OnChangeGold;
 };

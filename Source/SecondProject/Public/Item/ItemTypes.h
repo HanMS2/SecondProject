@@ -64,6 +64,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		EItemType item_Type;
+
+	UPROPERTY(EditAnywhere)
+		int32 sellPrice;
 };
 
 

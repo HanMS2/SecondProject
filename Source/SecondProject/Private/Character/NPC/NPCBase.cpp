@@ -7,6 +7,10 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Widget/NPC/NPCDialogWidget.h"
 #include "Character/Player/Controller/CustomController.h"
+#include "Item/ItemActor.h"
+#include "Character/Player/Component/InventoryComponent.h"
+#include "Character/Player/PlayerCharacter.h"
+#include "Character/Component/StatusComponent.h"
 
 // Sets default values
 ANPCBase::ANPCBase()
@@ -28,7 +32,10 @@ ANPCBase::ANPCBase()
 void ANPCBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	for (auto item : GetSellItemList())
+	{
+		sellItemList.Emplace(*item);
+	}
 }
 
 const TArray<FNPCSellItem*> ANPCBase::GetSellItemList()
@@ -65,6 +72,36 @@ void ANPCBase::Interaction(APlayerController* controller)
 		{
 			con->GetDialogWidget()->Init(this);
 			con->GetDialogWidget()->AddToViewport();
+		}
+	}
+}
+
+void ANPCBase::BuyItem(class APlayerCharacter* player, const FName& itemCode)
+{
+	for (auto& sellItem : sellItemList)
+	{
+		const auto item = sellItem.sellItemClass.GetDefaultObject();
+		if (item->GetItemInformation<FItemInformation>()->item_Code.IsEqual(itemCode))
+		{
+			if (sellItem.count > 0)
+			{
+				//플레이어가 들고있는 골드량을 체크
+				if (player->GetStatusComponent()->GetGold() - sellItem.price >= 0)
+				{
+					auto spawnItem = GetWorld()->SpawnActor<AItemActor>(item->GetClass());
+					if (spawnItem)
+					{
+						spawnItem->SetActorHiddenInGame(true);
+						player->GetinventoryComponent()->AddItem(spawnItem);
+						spawnItem->Destroy();
+					}
+					player->GetStatusComponent()->SetGold(player->GetStatusComponent()->GetGold() - sellItem.price);
+					sellItem.count--;
+					OnChangeSaveItemCount.Broadcast(sellItem.count);
+					OnChangeSaveItemCount.Clear();
+				}
+			}
+			break;
 		}
 	}
 }

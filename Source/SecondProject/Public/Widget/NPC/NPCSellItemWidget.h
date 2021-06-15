@@ -6,6 +6,16 @@
 #include "Blueprint/UserWidget.h"
 #include "NPCSellItemWidget.generated.h"
 
+
+
+UENUM(BlueprintType)
+enum class ENPCActionType : uint8
+{
+	SELL,
+	BUY,
+};
+
+
 /**
  * 
  */
@@ -20,6 +30,12 @@ protected:
 
 	UPROPERTY()
 		class UButton* Button_Close;
+
+	UPROPERTY()
+		class UTextBlock* TextBlock_Gold;
+
+	UPROPERTY(EditAnywhere)
+		ENPCActionType npcActionType;
 public:
 	UFUNCTION()
 		void OnClickedButtonClose();
@@ -33,4 +49,6 @@ public:
 public:
 	void SetNPC(ANPCBase* npc) { ownerNPC = npc; }
 
+	UFUNCTION()
+		void SetGoldText(const int32& gold);
 };

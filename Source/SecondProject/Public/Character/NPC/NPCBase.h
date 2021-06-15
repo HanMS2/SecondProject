@@ -7,7 +7,7 @@
 #include "Engine/DataTable.h"
 #include "NPCBase.generated.h"
 
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeSaveItemCount, const int32&, changedCount);
 
 USTRUCT(BlueprintType)
 struct FNPCSellItem : public FTableRowBase
@@ -53,6 +53,10 @@ private:
 		FName npcName;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (AllowPrivateAccess = true))
 		class UDataTable* sellTable;
+	
+	TArray<FNPCSellItem> sellItemList;
+	const TArray<FNPCSellItem*> GetSellItemList();
+
 protected:
 
 	UPROPERTY(EditAnywhere)
@@ -60,12 +64,15 @@ protected:
 	
 
 public:	
-	const TArray<FNPCSellItem*> GetSellItemList();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void Interaction(APlayerController* controller);
 
 	const FName& GetNPCName() { return npcName; }
 	TArray<FName> GetChat() { return chat; }
+	void BuyItem(class APlayerCharacter* player, const FName& itemCode);
+	
+	const TArray<FNPCSellItem>& GetSavedSellItemList() { return sellItemList; }
 
+	FOnChangeSaveItemCount OnChangeSaveItemCount;
 };

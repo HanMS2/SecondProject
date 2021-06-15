@@ -52,6 +52,11 @@ protected:
 		TSubclassOf<class UNPCSellItemWidget> sell_ItemWidgetClass;
 	UPROPERTY()
 		class UNPCSellItemWidget* sell_ItemWidget;
+	
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UNPCBuyItemWidget> buy_ItemWidgetClass;
+	UPROPERTY()
+		class UNPCBuyItemWidget* buy_ItemWidget;
 
 public:
 	void Init(class ANPCBase* npc);

@@ -29,12 +29,18 @@ protected:
 		class UTextBlock* TextBlock_ItemCount;
 	UPROPERTY()
 		class UTextBlock* TextBlock_ItemPrice;
-	
+	UPROPERTY()
+		struct FNPCSellItem sellItemInfo;
+	UPROPERTY()
+		class ANPCBase* ownerNPC;
 public:
-	void SetInformation(const FNPCSellItem* info);
+	void SetInformation(const FNPCSellItem* info, class ANPCBase* owner);
 
 	UFUNCTION()
 		void OnClickedButtonBuy();
 	virtual void NativeConstruct()override;
+
+	UFUNCTION()
+		void OnChangedItemCount(const int32& newCount);
 
 };
