@@ -106,3 +106,33 @@ void ANPCBase::BuyItem(class APlayerCharacter* player, const FName& itemCode)
 	}
 }
 
+void ANPCBase::SellItem(APlayerCharacter* player, const FName& itemCode)
+{
+	auto invenComp = player->GetinventoryComponent();
+	if (invenComp != nullptr)
+	{
+		auto info = invenComp->GetItemInfo(itemCode);
+		if (info != nullptr)
+		{
+			const auto price = info->sellPrice;
+			//DecreaseItemCount 를 bool형으로 반환해서 성공적으로 아이템을 비웠을경우 골드를 받는거로 변경하자!
+			auto bSell = invenComp->DecreaseItemCount(itemCode);
+			if (bSell)
+			{
+				player->GetStatusComponent()->SetGold(player->GetStatusComponent()->GetGold() + price);
+
+				auto storedItem = invenComp->GetItem(itemCode);
+				if (storedItem != nullptr)
+				{
+					OnChangeSellItemCount.Broadcast(storedItem->item_Count);
+				}
+				else
+				{
+					OnChangeSellItemCount.Broadcast(0);
+				}
+			}
+				OnChangeSellItemCount.Clear();
+		}
+	}
+}
+

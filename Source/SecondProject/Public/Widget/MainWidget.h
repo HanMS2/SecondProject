@@ -23,6 +23,17 @@ protected:
 	UPROPERTY()
 		class UQuickSlotWidget* UMG_QuickSlot;
 
+	UPROPERTY()
+		class UScrollBox* ScrollBox_SystemMessage;
+
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class USystemMsgWidget> SystemMsgWidgetClass;
+
+public:
+
+	UFUNCTION()
+		void AddSystemMsg(FName msg,enum ESystemMsgType type);
+
 };

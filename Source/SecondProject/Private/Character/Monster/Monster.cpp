@@ -114,6 +114,7 @@ float AMonster::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, 
 
 	if (statusComponent->GetHP() <= 0)
 	{
+		//여기에 경험치 주는 함수 ㄱㄱ
 		OnDeath.Broadcast();
 	}
 

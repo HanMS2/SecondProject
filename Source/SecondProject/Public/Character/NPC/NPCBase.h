@@ -8,6 +8,7 @@
 #include "NPCBase.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeSaveItemCount, const int32&, changedCount);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeSellItemCount, const int32&, changedCount);
 
 USTRUCT(BlueprintType)
 struct FNPCSellItem : public FTableRowBase
@@ -70,9 +71,14 @@ public:
 
 	const FName& GetNPCName() { return npcName; }
 	TArray<FName> GetChat() { return chat; }
+	//플레이어가 아이템을 산다.
 	void BuyItem(class APlayerCharacter* player, const FName& itemCode);
 	
+	//플레이어가 아이템을 판다
+	void SellItem(class APlayerCharacter* player, const FName& itemCode);
+
 	const TArray<FNPCSellItem>& GetSavedSellItemList() { return sellItemList; }
 
 	FOnChangeSaveItemCount OnChangeSaveItemCount;
+	FOnChangeSellItemCount OnChangeSellItemCount;
 };

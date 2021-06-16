@@ -136,6 +136,8 @@ public:
 	
 	void RemoveItem(const FName itemCode);
 
+	bool DecreaseItemCount(const FName itemCode);
+
 	const FStoredItem* GetItem(const FName& itemCode);
 	const FItemInformation* GetItemInfo(const FName& itemCode);
 	void SetWeapon(FWeaponInformation* info) { equippedItem.SetWeapon(info); }

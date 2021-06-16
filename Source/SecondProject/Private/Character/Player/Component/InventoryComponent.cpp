@@ -91,6 +91,8 @@ void UInventoryComponent::AddItem(AItemActor* item)
 		if (info != nullptr)
 		{
 			inventory.Add(info->item_Code, new FStoredItem(info, item->GetItemCount()));
+
+			//컨트롤러를 들고와서 OnSystemMsg.Broadcast("~아이템을 획득했다.",ESystemMsgType::GetItem);
 		}
 	}
 }
@@ -166,12 +168,34 @@ void UInventoryComponent::RemoveItem(const FName itemCode)
 
 		auto controller = Cast<ACustomController>(Cast<ACharacter>(GetOwner())->GetController());
 
-		if (controller != nullptr)
+		if (controller != nullptr && controller->GetinventoryWidget() != nullptr)
 		{
 			controller->GetinventoryWidget()->UpdateItemListButton(itemCode, 0);
 		}
 	}
 }
+bool UInventoryComponent::DecreaseItemCount(const FName itemCode)
+{
+	if (inventory.Contains(itemCode))
+	{
+		if (inventory[itemCode]->item_Count - 1 <= 0)
+		{
+			//해당 아이템을 지우면 됨.
+			RemoveItem(itemCode);
+			
+		}
+		else
+		{
+			inventory[itemCode]->item_Count--;
+		}
+			return true;
+	}
+
+	return false;
+
+}
+
+
 const FStoredItem* UInventoryComponent::GetItem(const FName& itemCode)
 {
 	if (inventory.Contains(itemCode))

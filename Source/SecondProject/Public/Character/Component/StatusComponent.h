@@ -4,9 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Engine/DataTable.h"
 #include "StatusComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChangeGold, const int32&, changedGold);
+
+USTRUCT(BlueprintType)
+struct FLevelUpInformation : public FTableRowBase
+{
+	GENERATED_BODY()
+public:
+	//(현재 레벨 +1) 로 올라가기 위한 경험치
+	UPROPERTY(EditAnywhere)
+		float exp;
+};
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -22,6 +33,9 @@ protected:
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	
+	UPROPERTY(EditAnywhere)
+		int32 level = 1;
 
 	UPROPERTY(EditAnywhere)
 		float HP;
@@ -38,11 +52,17 @@ protected:
 		float dam;
 	UPROPERTY(EditAnywhere)
 		float def;
-
-	TArray<int32>PauseStaminaOrder;
+TArray<int32>PauseStaminaOrder;
 
 	UPROPERTY(EditAnywhere)
 		int32 gold;
+
+	UPROPERTY(EditAnywhere)
+		int32 curExp;
+	UPROPERTY(EditAnywhere)
+		class UDataTable* levelUpTable;
+
+
 public:
 
 	void AddDam(float value) { dam += value; }
@@ -83,4 +103,7 @@ public:
 
 
 	FOnChangeGold OnChangeGold;
+
+	UFUNCTION(BlueprintCallable)
+	void AddEXP(const int32& exp);
 };

@@ -6,6 +6,16 @@
 #include "GameFramework/PlayerController.h"
 #include "CustomController.generated.h"
 
+
+UENUM(BlueprintType)
+enum class ESystemMsgType : uint8
+{
+	NORMAL,
+	LEVELUP,
+	GETITEM
+};
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSystemMsg, FName, msg, ESystemMsgType, type);
+
 /**
  * 
  */
@@ -61,4 +71,7 @@ public:
 
 	void SetDialogWidget(class UNPCDialogWidget* dialog) { DialogWidget = dialog; }
 	class UNPCDialogWidget* GetDialogWidget() { return DialogWidget; }
+
+	FSystemMsg OnSystemMsg;
+
 };

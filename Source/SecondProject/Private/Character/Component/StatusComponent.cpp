@@ -96,3 +96,22 @@ bool UStatusComponent::CheckStamina(float value)
 	return false;
 }
 
+void UStatusComponent::AddEXP(const int32& exp)
+{
+	curExp += exp;
+	if (levelUpTable != nullptr)
+	{
+		auto info = levelUpTable->FindRow<FLevelUpInformation>(FName(*FString::FormatAsNumber(level)),"");
+		if (info != nullptr)
+		{
+			if (curExp >= info->exp)
+			{
+				UE_LOG(LogTemp, Log, TEXT("level up : %d"), level);
+				level++;
+			}
+
+		}
+	}
+
+}
+
