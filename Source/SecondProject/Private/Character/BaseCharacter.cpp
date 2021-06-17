@@ -21,7 +21,7 @@ ABaseCharacter::ABaseCharacter()
 	widgetComponent->SetupAttachment(RootComponent);
 
 	perceptionSourceCopmponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("perceptionSourceCopmponent"));
-	skillComponent = CreateDefaultSubobject<ASkillComponent>(TEXT("skillComponent"));
+	skillComponent = CreateDefaultSubobject<USkillComponent>(TEXT("skillComponent"));
 
 }
 

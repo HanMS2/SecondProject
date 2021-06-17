@@ -10,13 +10,13 @@
 #include "SkillComponent.generated.h"
 
 UCLASS()
-class ASkillComponent : public AActor
+class USkillComponent : public UActorComponent
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ASkillComponent();
+	USkillComponent();
 
 protected:
 	// Called when the game starts or when spawned

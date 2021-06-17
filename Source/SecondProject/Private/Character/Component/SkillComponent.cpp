@@ -5,21 +5,21 @@
 #include "Character/Skill/SkillBase.h"
 
 // Sets default values
-ASkillComponent::ASkillComponent()
+USkillComponent::USkillComponent()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = false;
 
 }
 
 // Called when the game starts or when spawned
-void ASkillComponent::BeginPlay()
+void USkillComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
-void ASkillComponent::GiveSkill(TSubclassOf<class USkillBase> skillClass)
+void USkillComponent::GiveSkill(TSubclassOf<class USkillBase> skillClass)
 {
 	if (skillClass != nullptr)
 	{
@@ -40,7 +40,7 @@ void ASkillComponent::GiveSkill(TSubclassOf<class USkillBase> skillClass)
 	}
 }
 
-void ASkillComponent::UseSkill(FGameplayTag skillTag)
+void USkillComponent::UseSkill(FGameplayTag skillTag)
 {
 	if (skillMap.Contains(skillTag))
 	{

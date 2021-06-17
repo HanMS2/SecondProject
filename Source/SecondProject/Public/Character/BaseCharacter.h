@@ -24,7 +24,7 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
-		class ASkillComponent* skillComponent;
+		class USkillComponent* skillComponent;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 		class UStatusComponent* statusComponent;
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
