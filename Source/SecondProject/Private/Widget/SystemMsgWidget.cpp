@@ -7,6 +7,7 @@
 
 void USystemMsgWidget::SetText(FName msg, FLinearColor textColor)
 {
+	UE_LOG(LogTemp, Log, TEXT("%s"),*msg.ToString());
 	TextBlock_Msg->SetText(FText::FromName(msg));
 	TextBlock_Msg->ColorAndOpacity = FSlateColor(textColor);	
 }

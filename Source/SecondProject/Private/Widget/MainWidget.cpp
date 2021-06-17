@@ -60,6 +60,8 @@ void UMainWidget::AddSystemMsg(FName msg, enum ESystemMsgType type)
 			default:
 				break;
 			}
+			ScrollBox_SystemMessage->AddChild(msgWidget);
+			ScrollBox_SystemMessage->ScrollToEnd();
 		}
 
 	}

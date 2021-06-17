@@ -8,6 +8,7 @@
 #include "Components/WidgetComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Character/Component/SkillComponent.h"
 // Sets default values
 ABaseCharacter::ABaseCharacter()
 {
@@ -20,6 +21,7 @@ ABaseCharacter::ABaseCharacter()
 	widgetComponent->SetupAttachment(RootComponent);
 
 	perceptionSourceCopmponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("perceptionSourceCopmponent"));
+	skillComponent = CreateDefaultSubobject<ASkillComponent>(TEXT("skillComponent"));
 
 }
 

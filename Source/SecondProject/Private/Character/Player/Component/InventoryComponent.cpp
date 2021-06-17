@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Character/Player/Component/InventoryComponent.h"
@@ -91,8 +91,13 @@ void UInventoryComponent::AddItem(AItemActor* item)
 		if (info != nullptr)
 		{
 			inventory.Add(info->item_Code, new FStoredItem(info, item->GetItemCount()));
-
-			//ÄÁÆ®·Ñ·¯¸¦ µé°í¿Í¼­ OnSystemMsg.Broadcast("~¾ÆÀÌÅÛÀ» È¹µæÇß´Ù.",ESystemMsgType::GetItem);
+			
+			auto controller = Cast<ACustomController>(Cast<APlayerCharacter>(GetOwner())->GetController());
+			if (controller != nullptr)
+			{				
+				FString str = info->item_Name.ToString() + TEXT("ì„(ë¥¼) íšë“í–ˆìŠµë‹ˆë‹¤.");
+				controller->OnSystemMsg.Broadcast(FName(*str), ESystemMsgType::GETITEM);
+			}
 		}
 	}
 }
@@ -108,7 +113,7 @@ void UInventoryComponent::UseItem(const FName itemCode, AActor* target)
 			if (inventory[itemCode]->GetItemInfo()->item_Type == EItemType::Consume)
 			{
 				inventory[itemCode]->item_Count--;
-				//¹öÆ°ÀÇ Ä«¿îÆ®¸¦ °¨¼Ò½ÃÅ´
+				//ë²„íŠ¼ì˜ ì¹´ìš´íŠ¸ë¥¼ ê°ì†Œì‹œí‚´
 
 				auto controller = Cast<ACustomController>(Cast<ACharacter>(GetOwner())->GetController());
 
@@ -180,7 +185,7 @@ bool UInventoryComponent::DecreaseItemCount(const FName itemCode)
 	{
 		if (inventory[itemCode]->item_Count - 1 <= 0)
 		{
-			//ÇØ´ç ¾ÆÀÌÅÛÀ» Áö¿ì¸é µÊ.
+			//í•´ë‹¹ ì•„ì´í…œì„ ì§€ìš°ë©´ ë¨.
 			RemoveItem(itemCode);
 			
 		}
@@ -281,7 +286,7 @@ void UInventoryComponent::UseQuick()
 	{
 		auto code = quickSlot[quickIndex];
 		UseItem(quickSlot[quickIndex], GetOwner());
-		//¿©±â¿¡ °¹¼ö ¾÷µ¥ÀÌÆ®
+		//ì—¬ê¸°ì— ê°¯ìˆ˜ ì—…ë°ì´íŠ¸
 		
 		
 

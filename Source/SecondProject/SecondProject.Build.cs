@@ -10,6 +10,6 @@ public class SecondProject : ModuleRules
 
 		PublicDependencyModuleNames.
 			AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore",
-				"HeadMountedDisplay" ,"UMG", "Slate", "SlateCore","AIModule","GamePlayTasks" });
+				"HeadMountedDisplay" ,"UMG", "Slate", "SlateCore","AIModule","GamePlayTasks","GameplayTags" });
 	}
 }

@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Character/Component/StatusComponent.h"
 #include "TimerManager.h"
 #include "Character/Player/PlayerCharacter.h"
+#include "Character/Player/Controller/CustomController.h"
 
 // Sets default values for this component's properties
 UStatusComponent::UStatusComponent()
@@ -99,19 +100,25 @@ bool UStatusComponent::CheckStamina(float value)
 void UStatusComponent::AddEXP(const int32& exp)
 {
 	curExp += exp;
-	if (levelUpTable != nullptr)
-	{
-		auto info = levelUpTable->FindRow<FLevelUpInformation>(FName(*FString::FormatAsNumber(level)),"");
-		if (info != nullptr)
-		{
-			if (curExp >= info->exp)
-			{
-				UE_LOG(LogTemp, Log, TEXT("level up : %d"), level);
-				level++;
-			}
 
+	auto controller = Cast<ACustomController>(Cast<APlayerCharacter>(GetOwner())->GetController());
+	if (controller != nullptr)
+	{
+		FString msg = FString::FormatAsNumber(exp) + TEXT(" 만큼의 경험치 획득");
+		controller->OnSystemMsg.Broadcast(FName(*msg), ESystemMsgType::NORMAL);
+
+		if (levelUpTable != nullptr)
+		{
+			auto info = levelUpTable->FindRow<FLevelUpInformation>(FName(*FString::FormatAsNumber(level)), "");
+			if (info != nullptr)
+			{
+				if (curExp >= info->exp)
+				{
+					controller->OnSystemMsg.Broadcast(TEXT("레벨이 올랐습니다."), ESystemMsgType::LEVELUP);
+					level++;
+				}
+			}
 		}
 	}
-
 }
 
