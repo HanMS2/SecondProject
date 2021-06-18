@@ -30,11 +30,11 @@ void USkillComponent::GiveSkill(TSubclassOf<class USkillBase> skillClass)
 			if (skillMap.Contains(skill->GetSkillTag()) == false)
 			{
 
-				/*
+				
 				FStoredSKill newSkill;
-				newSkill.SetSkillInfo(*skill->GetSKillInformation<FSkillInformation>());
+				newSkill.SetSkillInfo(skill->GetSKillInformation<FSkillInformation>());
 				skillMap.Add(skill->GetSkillTag(), newSkill);
-			*/
+			
 			}
 		}
 	}
@@ -45,6 +45,7 @@ void USkillComponent::UseSkill(FGameplayTag skillTag)
 	if (skillMap.Contains(skillTag))
 	{
 		const auto skill = skillMap[skillTag].GetSkillInfo()->skillClass.GetDefaultObject();
+		skill->SetSKillOwner(Cast<ABaseCharacter>(GetOwner()));
 		skill->PreActivateSkill();
 
 	}

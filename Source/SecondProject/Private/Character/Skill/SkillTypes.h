@@ -34,7 +34,7 @@ private:
 	FSkillInformation* skill_Info;
 public:
 	const FSkillInformation* GetSkillInfo() { return skill_Info; }
-	void SetSkillInfo(FSkillInformation info) { skill_Info = &info; }
+	void SetSkillInfo(FSkillInformation* info) { skill_Info = info; }
 
 	
 };

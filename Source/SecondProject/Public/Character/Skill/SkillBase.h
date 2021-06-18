@@ -21,13 +21,35 @@ class SECONDPROJECT_API USkillBase : public UObject
 {
 	GENERATED_BODY()
 protected:
+
+	UPROPERTY(BlueprintReadOnly)
+		class ABaseCharacter* SkillOwner;
+
 	UPROPERTY(EditAnywhere)
 		FGameplayTag skillTag;
 	UPROPERTY(EditAnywhere)
 		class UDataTable* skillTable;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class USkillRequirement> skillRequirement;
+	UPROPERTY(EditAnywhere)
+		TArray<class UAnimMontage*> skillAnimation;
+	UPROPERTY(EditAnywhere)
+		class UParticleSystem* skillEffect;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	class UAnimMontage* GetRandomSkillAnimation();
+
+	UFUNCTION(BlueprintCallable)
+		void ApplyDamageEffect(class ABaseCharacter* target);
+
+	UFUNCTION(BlueprintCallable)
+		void CreateLineTrace();
+
+	virtual class UWorld* GetWorld()const override;
 public:
 	const FGameplayTag& GetSkillTag() { return skillTag; }
 
+	void SetSKillOwner(ABaseCharacter* character) { SkillOwner = character; }
 public:
 	//스킬 사전 설정을 하는 함수.
 	UFUNCTION(BlueprintNativeEvent)
@@ -36,7 +58,7 @@ public:
 
 protected:
 	//이 스킬이 사용 가능한지 확인하는 함수입니다. 참이면 사용가능.
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintNativeEvent,BlueprintCallable)
 		bool CommitSkill();
 	virtual bool CommitSkill_Implementation();
 
@@ -47,7 +69,7 @@ protected:
 
 public:
 	//이 함수를 호출하면 스킬이 종료됩니다.
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 		void EndSkill();
 	virtual void EndSkill_Implementation();	
 

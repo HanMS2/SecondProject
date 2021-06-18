@@ -42,6 +42,10 @@ protected:
 	UPROPERTY(EditAnywhere)
 		float MaxHP = 100;
 	UPROPERTY(EditAnywhere)
+		float MP;
+	UPROPERTY(EditAnywhere)
+		float MaxMP;
+	UPROPERTY(EditAnywhere)
 		float SP;
 	UPROPERTY(EditAnywhere)
 		float MaxSP = 100;
@@ -89,12 +93,16 @@ public:
 	const float& GetMaxHP() { return MaxHP; }
 	const float& GetSP() { return SP; }
 	const float& GetMaxSP() { return MaxSP; }
+	const float& GetMP() { return MP; }
+	const float& GetMaxMP() { return MaxMP; }
 
 	const float GetHPPercent() { return HP / (float)MaxHP; }
 	const float GetSPPercent() { return SP / (float)MaxSP; }
 
 	void SetHP(float value);
 	void SetSP(float value);
+	void SetMP(float value) { MP = value; }
+	void SetMaxMP(float value) { MaxMP = value; }
 	// Called every frame
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
