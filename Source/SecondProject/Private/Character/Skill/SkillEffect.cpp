@@ -5,6 +5,7 @@
 #include "Character/BaseCharacter.h"
 #include "Character/Component/StatusComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Character/Component/SkillComponent.h"
 
 void USkillEffect::ApplySkillEffect(ABaseCharacter* target, class ABaseCharacter* causer)
 {
@@ -32,8 +33,25 @@ void USkillEffect::ApplySkillEffect(ABaseCharacter* target, class ABaseCharacter
 		case EEffectedStat::MP:
 			statComp->SetHP(statComp->GetMP() - value);
 				break;
+		case EEffectedStat::COOLDOWN:
+		{
+			target->GetSkillComponent()->AddSkillEffect(effectTag);
+			FTimerHandle coolDownTimerHandle;
+			FTimerDelegate coolDownTimerDel = FTimerDelegate::CreateUObject(this, &USkillEffect::EndSkillEffect, target);
+			target->GetWorldTimerManager().SetTimer(coolDownTimerHandle, coolDownTimerDel, value, false);
+		}
+				break;
 		default:
 				break;
 		}
 	}
+}
+
+void USkillEffect::EndSkillEffect(ABaseCharacter* target)
+{
+	if (target != nullptr)
+	{
+		target->GetSkillComponent()->RemoveEffectTag(effectTag);
+	}	
+
 }

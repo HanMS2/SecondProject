@@ -12,6 +12,7 @@ enum class EEffectedStat : uint8
 	HP,
 	SP,
 	MP,
+	COOLDOWN,
 };
 
 /**
@@ -32,10 +33,14 @@ protected:
 		bool bDamage = false;
 	UPROPERTY(EditAnywhere,meta = (EditCondition = "bDamage"))
 		class UParticleSystem* damagedParicle;
+	UPROPERTY(EditAnywhere)
+		FGameplayTag effectTag;
+
 public:
 	virtual void ApplySkillEffect(class ABaseCharacter* target, class ABaseCharacter* causer = nullptr);
 
 	EEffectedStat GetEffectedStat() { return effectedStatType; }
 	const float GetValue() { return value; }
-
+	void EndSkillEffect(class ABaseCharacter* target);
+	FGameplayTag GetEffectTag() { return effectTag; }
 };

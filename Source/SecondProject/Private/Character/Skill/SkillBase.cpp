@@ -76,8 +76,9 @@ bool USkillBase::CommitSkill_Implementation()
 	if (req != nullptr)
 	{	
 		req->SetSKillOwner(SkillOwner);
+		
 		//발동 가능하면 참이 리턴됩니다.
-		bool bCanActivate = req->CheckSkillCost();
+		bool bCanActivate = req->CheckSkillCost() && !req->CheckSkillCoolDown();
 		return bCanActivate;
 	}
 	
@@ -96,7 +97,9 @@ void USkillBase::ActivateSkill_Implementation()
 		{
 			req->SetSKillOwner(SkillOwner);
 			req->ApplyCost();
+			req->ApplyCoolDown();
 		}
+
 		if (SkillOwner != nullptr)
 		{
 			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), skillEffect,

@@ -37,4 +37,8 @@ public:
 	bool CheckSkillCost();
 	void ApplyCost();
 	void ApplyDamageEffect(ABaseCharacter* target);
+	void ApplyCoolDown();
+	//참이면 쿨이도는 중이다.
+	bool CheckSkillCoolDown();
+
 };

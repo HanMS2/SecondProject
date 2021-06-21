@@ -51,3 +51,24 @@ void USkillComponent::UseSkill(FGameplayTag skillTag)
 	}
 }
 
+void USkillComponent::AddSkillEffect(FGameplayTag effectTag)
+{
+	if (ExistEffect(effectTag) == false)
+	{
+		skillEffectList.Emplace(effectTag);
+	}
+}
+
+bool USkillComponent::ExistEffect(FGameplayTag effectTag)
+{
+	return skillEffectList.Contains(effectTag);
+}
+
+void USkillComponent::RemoveEffectTag(FGameplayTag effectTag)
+{
+	if (ExistEffect(effectTag) == true)
+	{
+		skillEffectList.Remove(effectTag);
+	}
+}
+

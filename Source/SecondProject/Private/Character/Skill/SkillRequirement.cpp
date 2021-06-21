@@ -6,6 +6,7 @@
 #include "Character/Skill/SkillEffect.h"
 #include "Character/BaseCharacter.h"
 #include "Character/Component/StatusComponent.h"
+#include "Character/Component/SkillComponent.h"
 
 
 bool USkillRequirement::CheckSkillCost()
@@ -54,4 +55,26 @@ void USkillRequirement::ApplyDamageEffect(ABaseCharacter* target)
 			damageEffect->ApplySkillEffect(target, SkillOwner);
 		}
 	}
+}
+
+void USkillRequirement::ApplyCoolDown()
+{
+	if (skillCoolDown != nullptr)
+	{
+		const auto coolDownEffect = skillCoolDown.GetDefaultObject();
+		coolDownEffect->ApplySkillEffect(SkillOwner);
+	}
+
+
+}
+
+bool USkillRequirement::CheckSkillCoolDown()
+{
+	if (skillCoolDown != nullptr)
+	{
+		const auto coolDownEffect = skillCoolDown.GetDefaultObject();
+		return SkillOwner->GetSkillComponent()->ExistEffect(coolDownEffect->GetEffectTag());
+	}
+
+	return false;
 }

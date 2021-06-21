@@ -23,10 +23,22 @@ protected:
 	virtual void BeginPlay() override;
 	
 	TMap<struct FGameplayTag, struct FStoredSKill> skillMap;
+
+	TArray<struct FGameplayTag> skillEffectList;
 public:
 	UFUNCTION(BlueprintCallable)
 	void GiveSkill(TSubclassOf<class USkillBase> skillClass);
 
 	UFUNCTION(BlueprintCallable)
 	void UseSkill(FGameplayTag skillTag);
+	
+	UFUNCTION(BlueprintCallable)
+	void AddSkillEffect(FGameplayTag effectTag);
+	UFUNCTION(BlueprintCallable)
+		bool ExistEffect(FGameplayTag effectTag);
+
+	void RemoveEffectTag(FGameplayTag effectTag);
+
+
+
 };

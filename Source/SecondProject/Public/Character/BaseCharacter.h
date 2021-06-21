@@ -74,5 +74,6 @@ public:
 
 	/** Retrieve team identifier in form of FGenericTeamId */
 	virtual FGenericTeamId GetGenericTeamId() const { return myTeam; }
+	class USkillComponent* GetSkillComponent() { return skillComponent; }
 
 };

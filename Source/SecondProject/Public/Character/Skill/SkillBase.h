@@ -40,7 +40,7 @@ protected:
 	class UAnimMontage* GetRandomSkillAnimation();
 
 	UFUNCTION(BlueprintCallable)
-		void ApplyDamageEffect(class ABaseCharacter* target);
+	virtual	void ApplyDamageEffect(class ABaseCharacter* target);
 
 	UFUNCTION(BlueprintCallable)
 		void CreateLineTrace();
