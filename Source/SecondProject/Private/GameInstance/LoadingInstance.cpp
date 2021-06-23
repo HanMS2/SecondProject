@@ -3,6 +3,8 @@
 
 #include "GameInstance/LoadingInstance.h"
 #include "MoviePlayer.h"
+#include "Kismet/GameplayStatics.h"
+#include "Blueprint/UserWidget.h"
 
 void ULoadingInstance::Init()
 {
@@ -12,18 +14,20 @@ void ULoadingInstance::Init()
 
 void ULoadingInstance::StartLoadingScreen(const FString& levelName)
 {
-	if (loadingWidgetClass != nullptr)
-	{
-		auto widget = CreateWidget<UUserWidget>(GetWorld(),loadingWidgetClass.Get());
-	
-		if (widget != nullptr) 
-		{
-			FLoadingScreenAttributes loadingScreen;
-			loadingScreen.bAutoCompleteWhenLoadingCompletes = false;
-			loadingScreen.MinimumLoadingScreenDisplayTime = 10.f;
-			loadingScreen.WidgetLoadingScreen = widget->TakeWidget();
+	if (loadingWidgetClass != nullptr) {
+		auto widget =
+			CreateWidget<UUserWidget>(UGameplayStatics::GetPlayerController(GetWorld(), 0), loadingWidgetClass.Get());
 
-			GetMoviePlayer()->SetupLoadingScreen(loadingScreen);
+		if (widget != nullptr) {
+
+			FLoadingScreenAttributes LoadingScreen;
+
+			LoadingScreen.bAutoCompleteWhenLoadingCompletes = false;
+			LoadingScreen.WidgetLoadingScreen = widget->TakeWidget();
+			LoadingScreen.MinimumLoadingScreenDisplayTime = 10.f;
+			LoadingScreen.MoviePaths.Add("Blurred Distance_1080p");
+			GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+
 		}
 	}
 }

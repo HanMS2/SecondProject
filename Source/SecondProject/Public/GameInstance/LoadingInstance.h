@@ -17,9 +17,10 @@ protected:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<UUserWidget> loadingWidgetClass;
 
-	virtual void Init()override;
+	virtual void Init();
 
 	UFUNCTION()
 		void StartLoadingScreen(const FString& levelName);
+
 
 };

@@ -9,7 +9,7 @@ public class SecondProject : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.
-			AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore",
-				"HeadMountedDisplay" ,"UMG", "Slate", "SlateCore","AIModule","GamePlayTasks","GameplayTags","MoviePlayer" });
+			AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" ,
+				"UMG", "Slate", "SlateCore","AIModule","GamePlayTasks","GameplayTags","MoviePlayer","MediaAssets" });
 	}
 }
